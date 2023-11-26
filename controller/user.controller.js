@@ -1,9 +1,11 @@
 const express = require("express");
-const { UserModel } = require("../models/userModels");
+const { UserModel,UserDetailsModel } = require("../models/userModels");
 const bcrypt= require("bcrypt");
 const jwt = require("jsonwebtoken")
 require("dotenv").config();
+
 const userController = express.Router();
+const userDetailsController = express.Router();
 
 
 
@@ -44,4 +46,16 @@ userController.post("/login", async (req, res) => {
     }
   });
 
-module.exports = { userController };
+  userDetailsController.post("/address", async (req, res) => {
+    const { name, email, mobile,alternate_Mobile,locality,city,state,userId ,pincode } = req.body;
+    try {
+        const userDetails = await UserDetailsModel.create({name,email,mobile,alternate_Mobile,city,state,locality,pincode,userId});
+        res.json({ status: "User Address Saved SuccessFully", newAddress: name });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+
+
+module.exports = { userController,userDetailsController };
