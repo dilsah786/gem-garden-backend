@@ -15,8 +15,23 @@ const productsSchema = mongoose.Schema({
     userId:{type:String,required:true},
     
 })
+const CartProductsSchema = mongoose.Schema({
+    brand:{type:String},
+    title:{type:String},
+    description:{type:String},
+    price:{type:String},
+    origPrice:{type:String},
+    img1:{type:String},
+    img2:{type:String},
+    img3:{type:String},
+    img4:{type:String},
+    img5:{type:String},
+    category:{type:String,enum:['Rings','Earrings','Necklaces']},
+    userId:{type:String},
+    
+})
 
 const ProductsModel = mongoose.model("product",productsSchema);
-const CartProductsModel = mongoose.model("cart",productsSchema);
+const CartProductsModel = mongoose.model("cart",CartProductsSchema);
 
 module.exports = {ProductsModel,CartProductsModel}

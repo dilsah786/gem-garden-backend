@@ -7,37 +7,103 @@ const {
 const productController = express.Router();
 
 productController.get("/", async (req, res) => {
-  const products = await ProductsModel.find();
+  const products =[];
+  products = await ProductsModel.find();
   res.json({ status: "All products are here", data: products });
 });
 
+
+
+
+module.exports = { productController };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // productController.post("/addtocart/:id", async (req, res) => {
-//   const itemId = req.params.id;
+//   const productId = req.params.id;
 //   const { userId } = req.body;
- 
+
+//   req.body.productId = productId;
+
+//   console.log(productId);
+
 //   try {
-//     const productforCart = await ProductsModel.findOne({ _id: itemId });
-  
+//     const productforCart = await ProductsModel.findOne({ _id: productId });
+
 //     if (!productforCart) {
-//       return res.status(404).json({ status: "Error", message: "Product not found" });
+//       return res
+//         .status(404)
+//         .json({ status: "Error", message: "Product not found" });
 //     }
-//     const newProduct = await CartProductsModel.create({
-//       product: productforCart,
+//     const existingCartItem = await CartProductsModel.findOne({
+//       _id: productId,
 //       userId,
 //     });
-//     res.json({ status: "New Products  Added to cart", data: newProduct });
+
+//     if (existingCartItem) {
+//       // If the product is already in the cart, you might want to update quantity or handle accordingly
+//       return res
+//         .status(400)
+//         .json({ status: "Error", message: "Product already in the cart" });
+//     }
+
+//     const data = await CartProductsModel.updateOne(
+//       { itemname: "nuts" },
+//       { $push: { user: userId } }
+//     );
+
+//     const newCartItem = await CartProductsModel.create({
+//       productId: req.body.productId,
+//       userId,
+//       // Add other product details as needed
+//     });
+//     res.json({ status: "New Product Added to cart", data: newCartItem });
 //   } catch (err) {
 //     console.log(err);
 //     console.log("Error Occured while Adding Item to cart Page");
 //   }
 // });
-
-productController.patch("/update", async (req, res) => {
-  res.json({ data: "All products are here" });
-});
-
-productController.delete("/delete", async (req, res) => {
-  res.json({ data: "All products are here" });
-});
-
-module.exports = { productController };

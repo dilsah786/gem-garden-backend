@@ -1,19 +1,23 @@
 const express = require("express");
 const { connection } = require("./db");
-const { UserModel } = require("./models/userModels");
-const { userController,userDetailsController } = require("./controller/user.controller");
+const { userController } = require("./controller/user.controller");
 const { authentication } = require("./Auth_middleware/authentication");
 const { productController } = require("./controller/products.controller");
-require("dotenv").config();
+const { userDetailsController} = require("./controller/userAddress.controller");
+const cors = require("cors");
 const app = express();
+
+app.use(cors());
+require("dotenv").config();
+
 app.use(express.json());
 
 app.use("/user", userController);
 
 app.use(authentication);
 
-app.use("/jewellery",productController)
-app.use("/user",userDetailsController)
+app.use("/jewellery", productController);
+app.use("/user", userDetailsController);
 app.get("/", (req, res) => {
   res.send("HomePage for Gem-Garden");
 });

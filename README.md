@@ -10,8 +10,8 @@ url/users/details
 
 # Getting the post 
 url/jewellery <br/>
-url/rings    <br/>
-url/necklaces  <br/>
+url/rings     <br/>
+url/necklaces <br/>
 
 # Sorting
 url/jwellery?sortBy=category&order=asc || desc
