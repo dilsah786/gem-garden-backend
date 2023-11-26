@@ -27,22 +27,41 @@ const productController = express.Router();
 
 productController.get("/", async (req, res) => {
   let products = [];
-  const sortBy = req.query.sortBy;
-  const order = req.query.order;
-  const category = req.query.category;
-  const brand = req.query.brand;
-  const title = req.query.title;
+  const {sortBy,order,page,limit,category,brand,title} = req.query;
 
+  const skipDataForPagination = (page-1)*limit;
+
+  console.log(page,limit,order,sortBy);
+
+  if (page && limit && order && sortBy) {
+    if (order === "asc") {
+      products = await ProductsModel.find()
+        .skip(skipDataForPagination)
+        .limit(limit)
+        .sort({ [sortBy]: 1 });
+        console.log(products +" combo")
+    return  res.json({status:"success combo", data:products });
+    } else if (order === "desc") {
+      products = await ProductsModel.find()
+        .skip(skipDataForPagination)
+        .limit(limit)
+        .sort({ [sortBy]: -1 });
+    return  res.json({status:"success", data:products });
+    }
+  }
+  else if (page && limit) {
+    products = await ProductsModel.find().skip(skipDataForPagination).limit(limit);
+  return  res.json({status:"success combo", data:products });
+  }
 
   if (sortBy === "price" && order === "asc") {
-    const data = await ProductsModel.find().sort({ price: 1 });
-  return  res.json({ data });
+    products = await ProductsModel.find().sort({ price: 1 });
+  return  res.json({products });
   }
  else if (sortBy === "price" && order === "desc") {
-    const data = await ProductsModel.find().sort({ price: -1 });
-  return  res.json({ data });
+    products = await ProductsModel.find().sort({ price: -1 });
+  return  res.json({products });
   }
-  
  else if(category){
     products = await ProductsModel.find({category:category});
     return   res.json({ status: "All products are here", data: products });
@@ -54,12 +73,14 @@ productController.get("/", async (req, res) => {
   else if(title){
     products = await ProductsModel.find({title:title});
     return   res.json({ status: "All products are here", data: products });
-  } else{
-
+  }else{
   products = await ProductsModel.find();
-  res.json({ status: "All products are here", data: products });
+  return res.json({ status: "All products are here", data: products });
   }
+
 }); 
+
+
 
 // Getting Data with Category Wise
 
@@ -80,6 +101,8 @@ productController.get("/:category", async (req, res) => {
     res.json({ status: "Invalid Request No Data Found", data: products });
   }
 });
+
+
 
 
 // Applying Sorting in with any key in ascending or descending order
@@ -130,3 +153,16 @@ module.exports = { productController };
 //     console.log("Error Occured while Adding Item to cart Page");
 //   }
 // });
+
+
+
+
+
+
+// const sortBy = req.query.sortBy;
+// const order = req.query.order;
+// const page = req.query.page;
+// const limit = req.query.limit;
+// const category = req.query.category;
+// const brand = req.query.brand;
+// const title = req.query.title;
