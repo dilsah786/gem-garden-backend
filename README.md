@@ -60,8 +60,14 @@ url/necklaces
 
 
 <h2>Filtering the Product according to key and value</h2>
-<p>/jewellery?title=Sparkling Double Halo Stud Earrings</p>
+<p>url/jewellery?title=Sparkling Double Halo Stud Earrings</p>
 
+<h2>Searching </h2>
+<h4>You can search anything with this url and query Search is not case sensitive </h4>
+
+<p>url/jewellery?q=pandora</p>
+
+![Screenshot_20231127_203612](https://github.com/dilsah786/gem-garden-backend/assets/120841935/57439ced-3c83-4d80-918a-b92524a127b2)
 
 
 
