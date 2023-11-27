@@ -13,20 +13,23 @@ url/jewellery <br/>
 url/rings     <br/>
 url/necklaces <br/>
 
-# Sorting    Done  <--------
+# Sorting    Done  <--------   
 url/jwellery?sortBy=category&order=asc || desc
 
 # Pagination     Done  <----
 url/jwellery?page=1&limit=20
 
-# Sorting and filter     <-------
+# Sorting and filter     <------- Done
 url/jwellery?filterBy=category&sortBy=category&order=asc || desc
 
-# Add to cart
+# Add to cart      
  url/cart_items
 
  # ordered Product
-  url/orders
+  url/orders       
 
+# Searching 
+
+url?q=search
 
 
