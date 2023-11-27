@@ -8,13 +8,26 @@ const productController = express.Router();
 
 productController.get("/", async (req, res) => {
   let products = [];
-  const { sortBy, order, page, limit, category, brand, title } = req.query;
+  const { sortBy, order, page, limit, category, brand, title, q } = req.query;
 
   const skipDataForPagination = (page - 1) * limit;
+  const searchQuerry = q;
 
-  console.log(page, limit, order, sortBy,category);
-
-  if (page && limit && order && sortBy) {
+  if (searchQuerry) {
+    const regex = new RegExp(searchQuerry, "i");
+    products = await ProductsModel.find({
+      $or: [
+        { title: regex },
+        { brand: regex },
+        { description: regex },
+        { origPrice: regex },
+        { price: regex },
+        { category: regex },
+      ],
+    });
+    return res.json({ status: "Here is your Search", data: products });
+  }
+   if (page && limit && order && sortBy) {
     if (order === "asc") {
       products = await ProductsModel.find()
         .skip(skipDataForPagination)
@@ -118,56 +131,3 @@ productController.get("/:category", async (req, res) => {
 // Applying Sorting in with any key in ascending or descending order
 
 module.exports = { productController };
-
-// productController.post("/addtocart/:id", async (req, res) => {
-//   const productId = req.params.id;
-//   const { userId } = req.body;
-
-//   req.body.productId = productId;
-
-//   console.log(productId);
-
-//   try {
-//     const productforCart = await ProductsModel.findOne({ _id: productId });
-
-//     if (!productforCart) {
-//       return res
-//         .status(404)
-//         .json({ status: "Error", message: "Product not found" });
-//     }
-//     const existingCartItem = await CartProductsModel.findOne({
-//       _id: productId,
-//       userId,
-//     });
-
-//     if (existingCartItem) {
-//       // If the product is already in the cart, you might want to update quantity or handle accordingly
-//       return res
-//         .status(400)
-//         .json({ status: "Error", message: "Product already in the cart" });
-//     }
-
-//     const data = await CartProductsModel.updateOne(
-//       { itemname: "nuts" },
-//       { $push: { user: userId } }
-//     );
-
-//     const newCartItem = await CartProductsModel.create({
-//       productId: req.body.productId,
-//       userId,
-//       // Add other product details as needed
-//     });
-//     res.json({ status: "New Product Added to cart", data: newCartItem });
-//   } catch (err) {
-//     console.log(err);
-//     console.log("Error Occured while Adding Item to cart Page");
-//   }
-// });
-
-// const sortBy = req.query.sortBy;
-// const order = req.query.order;
-// const page = req.query.page;
-// const limit = req.query.limit;
-// const category = req.query.category;
-// const brand = req.query.brand;
-// const title = req.query.title;
