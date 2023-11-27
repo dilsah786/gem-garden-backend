@@ -72,12 +72,21 @@ url/necklaces
 
 
 # Endpoints for User Address
+
+ <h1>To get all the address refer this url</h1>
 <h2>GET /user/addresses</h2>
+<br/>
+<br/>
+
+
+<h2>You have to pass these field to create user Address to this url</h2>
 
 ![Screenshot_20231127_194633](https://github.com/dilsah786/gem-garden-backend/assets/120841935/ffead6a4-d51e-431f-b40b-f57e7dd53475)
 
+
 <h2>PATCH /user/address/edit/:id</h2>
 <h4>Pass id for edit the address and necessary data with valid key which is already present </h4>
+
 
 <h2>DELETE /user/address/delete/:id</h2>
 <h4>Pass id for deleting the address </h4>
