@@ -8,10 +8,11 @@ const productController = express.Router();
 
 productController.get("/", async (req, res) => {
   let products = [];
-  const { sortBy, order, page, limit, category, brand, title, q } = req.query;
 
+  const { sortBy, order, page, limit, category, brand, title, q } = req.query;
   const skipDataForPagination = (page - 1) * limit;
   const searchQuerry = q;
+
 
   if (searchQuerry) {
     const regex = new RegExp(searchQuerry, "i");
@@ -27,6 +28,7 @@ productController.get("/", async (req, res) => {
     });
     return res.json({ status: "Here is your Search", data: products });
   }
+
    if (page && limit && order && sortBy) {
     if (order === "asc") {
       products = await ProductsModel.find()
@@ -34,13 +36,15 @@ productController.get("/", async (req, res) => {
         .limit(limit)
         .sort({ [sortBy]: 1 });
       console.log(products + " combo");
+
       return res.json({ status: "success combo", data: products });
+
     } else if (order === "desc") {
       products = await ProductsModel.find()
         .skip(skipDataForPagination)
         .limit(limit)
         .sort({ [sortBy]: -1 });
-    
+         return res.json({ status: "success combo", data: products });
     }
   } else if (category && order && sortBy) {
     if (order === "asc") {
