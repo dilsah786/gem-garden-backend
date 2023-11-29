@@ -92,6 +92,3 @@ url/necklaces
 <h4>Pass id for deleting the address </h4>
 
 
-
-
-
