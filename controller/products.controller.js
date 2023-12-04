@@ -132,6 +132,27 @@ productController.get("/:category", async (req, res) => {
   }
 });
 
-// Applying Sorting in with any key in ascending or descending order
+productController.post("/carts/:id",async(req,res)=>{
+  const cartId = req.params.id;
+  const userId = req.body.userId
+  console.log(cartId);
+  const singleProduct = await ProductsModel.findOne({_id:cartId});
+  console.log(singleProduct)
+
+  const {brand,title,description,price,origPrice,img1,img2,img3,img4,img5,id,category}  = singleProduct
+
+  try{
+    const newPro = await CartProductsModel.create({brand,title,description,price,origPrice,img1,img2,img3,img4,img5,id,category,userId})
+    console.log(newPro);
+   return res.json(newPro)
+
+  }catch(err){
+      console.log(err); 
+  }
+
+})
+
+
+
 
 module.exports = { productController };
